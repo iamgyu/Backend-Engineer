@@ -50,7 +50,7 @@ public class Todo_Sqlite {
                 todo.put("detail", detail);
                 Boolean done = rs.getBoolean("done");
                 todo.put("done", done);
-                map.put("todo" + pk, todo);
+                map.put("todo", todo);
             }
             rs.close();
             stmt.close();
