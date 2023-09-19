@@ -13,33 +13,19 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @PostMapping("/webclient")
-    public void insert1000(@RequestBody TodoDto todoDto) {
-        WebClient webClient = WebClient.create();
-
-        for(int i = 0; i < 1000; i++) {
-            webClient.post()
-                    .uri("http://localhost:8080/todo")
-                    .body(BodyInserters.fromValue(todoDto))
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
-        }
-    }
-
     @PostMapping("")
     public void insert(@RequestBody TodoDto todoDto) {
         todoService.insertTodo(todoDto);
     }
 
-    @GetMapping("")
-    public JSONObject select() {
+    @GetMapping("/all")
+    public JSONObject selectAll() {
         return todoService.selectTodo();
     }
 
-    @GetMapping("/{pk}")
-    public JSONObject selectOne(@PathVariable int pk) {
-        return todoService.selectOneTodo(pk);
+    @GetMapping("")
+    public JSONObject selectOne(@RequestBody TodoDto todoDto) {
+        return todoService.selectOneTodo(todoDto);
     }
 
     @PatchMapping("/{pk}")
@@ -48,7 +34,7 @@ public class TodoController {
     }
 
     @DeleteMapping("/{pk}")
-    public void delete(@PathVariable int pk) {
-        todoService.deleteTodo(pk);
+    public void delete(@PathVariable int pk, @RequestBody TodoDto todoDto) {
+        todoService.deleteTodo(pk, todoDto);
     }
 }

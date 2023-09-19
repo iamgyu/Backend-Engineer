@@ -13,8 +13,8 @@ public class TodoService {
         return todoDao.selectTodo();
     }
 
-    public JSONObject selectOneTodo(int pk){
-        return todoDao.selectOneTodo(pk);
+    public JSONObject selectOneTodo(TodoDto todoDto){
+        return todoDao.selectOneTodo(todoDto);
     }
 
     public void insertTodo(TodoDto todoDto){
@@ -25,7 +25,7 @@ public class TodoService {
         todoDao.updateTodo(pk, todoDto);
     }
 
-    public void deleteTodo(int id){
-        todoDao.deleteTodo(id);
+    public void deleteTodo(int pk, TodoDto todoDto){
+        todoDao.deleteTodo(pk, todoDto);
     }
 }

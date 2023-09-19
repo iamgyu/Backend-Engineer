@@ -57,4 +57,26 @@ public class Member_Sqlite {
 
         return new JSONObject(map);
     }
+
+    public int checkMember(String id, String password){
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT pk FROM members WHERE id = '" + id + "' AND password = '" + password + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            int result = rs.getInt(1);
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+            if (result == 0){
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            }
+
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
