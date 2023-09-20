@@ -14,8 +14,8 @@ public class TodoController {
     private TodoService todoService;
 
     @PostMapping("")
-    public void insert(@RequestBody TodoDto todoDto) {
-        todoService.insertTodo(todoDto);
+    public void insert(@RequestHeader("Authorization") String encodeData, @RequestBody TodoDto todoDto) {
+        todoService.insertTodo(encodeData, todoDto);
     }
 
     @GetMapping("/all")
@@ -24,17 +24,17 @@ public class TodoController {
     }
 
     @GetMapping("")
-    public JSONObject selectOne(@RequestBody TodoDto todoDto) {
-        return todoService.selectOneTodo(todoDto);
+    public JSONObject selectOne(@RequestHeader("Authorization") String encodeData) {
+        return todoService.selectOneTodo(encodeData);
     }
 
     @PatchMapping("/{pk}")
-    public void update(@PathVariable int pk, @RequestBody TodoDto todoDto) {
-        todoService.updateTodo(pk, todoDto);
+    public void update(@PathVariable int pk, @RequestHeader("Authorization") String encodeData, @RequestBody TodoDto todoDto) {
+        todoService.updateTodo(pk, encodeData, todoDto);
     }
 
     @DeleteMapping("/{pk}")
-    public void delete(@PathVariable int pk, @RequestBody TodoDto todoDto) {
-        todoService.deleteTodo(pk, todoDto);
+    public void delete(@PathVariable int pk, @RequestHeader("Authorization") String encodeData) {
+        todoService.deleteTodo(pk, encodeData);
     }
 }
