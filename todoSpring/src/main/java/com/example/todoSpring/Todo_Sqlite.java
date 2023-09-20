@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 
 import java.lang.reflect.Member;
 import java.sql.*;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,11 @@ public class Todo_Sqlite {
             stmt.executeUpdate(sql);
             stmt.close();
 
-            int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            // int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            String[] resultDecode = Base64Decoder(todoDto.getEncodeData());
+            String id = resultDecode[0];
+            String pwd = resultDecode[1];
+            int check_member = member_sqlite.checkMember(id, pwd);
 
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO todos(title, detail, done, account_id)" +
                     " VALUES(?, ?, ?, ?)");
@@ -78,7 +83,11 @@ public class Todo_Sqlite {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stmt = conn.createStatement();
 
-            int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            // int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            String[] resultDecode = Base64Decoder(todoDto.getEncodeData());
+            String id = resultDecode[0];
+            String pwd = resultDecode[1];
+            int check_member = member_sqlite.checkMember(id, pwd);
 
             ResultSet rs = stmt.executeQuery("SELECT * FROM todos WHERE account_id = " + check_member + ";");
 
@@ -118,7 +127,11 @@ public class Todo_Sqlite {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stmt = conn.createStatement();
 
-            int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            // int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            String[] resultDecode = Base64Decoder(todoDto.getEncodeData());
+            String id = resultDecode[0];
+            String pwd = resultDecode[1];
+            int check_member = member_sqlite.checkMember(id, pwd);
 
             String checkSql = "SELECT account_id FROM todos WHERE pk = " + pk + ";";
             ResultSet rs = stmt.executeQuery(checkSql);
@@ -161,7 +174,11 @@ public class Todo_Sqlite {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stmt = conn.createStatement();
 
-            int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            // int check_member = member_sqlite.checkMember(todoDto.getId(), todoDto.getPassword());
+            String[] resultDecode = Base64Decoder(todoDto.getEncodeData());
+            String id = resultDecode[0];
+            String pwd = resultDecode[1];
+            int check_member = member_sqlite.checkMember(id, pwd);
 
             String checkSql = "SELECT account_id FROM todos WHERE pk = " + pk + ";";
             ResultSet rs = stmt.executeQuery(checkSql);
@@ -189,5 +206,12 @@ public class Todo_Sqlite {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String[] Base64Decoder(String encodeData) {
+        byte[] decodeBytes = Base64.getDecoder().decode(encodeData);
+        String decodeData = new String(decodeBytes);
+
+        return decodeData.split(":");
     }
 }
