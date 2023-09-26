@@ -16,4 +16,13 @@ public class MemberService {
     public JSONObject selectMember() {
         return member_sqlite.selectMember();
     }
+
+    public int checkMember(String id, String password) {
+        return member_sqlite.checkMember(id, password);
+    }
+
+    public int checkMemberId(String id) {
+        return member_sqlite.checkMemberId(id);
+    }
+
 }

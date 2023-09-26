@@ -1,8 +1,12 @@
 package com.example.todoSpring;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MemberDto {
     private String id;
     private String password;
+    public static Map<String, String> mapping = new HashMap<>();
 
     public MemberDto() {}
     public MemberDto(String id, String password){

@@ -11,19 +11,19 @@ public class TodoDao {
         return todo_sqlite.selectDB();
     }
 
-    public JSONObject selectOneTodo(String encodeData) {
-        return todo_sqlite.selectOneDB(encodeData);
+    public JSONObject selectOneTodo(String uuid) {
+        return todo_sqlite.selectOneDB(uuid);
     }
 
-    public void insertTodo(String encodeData, TodoDto todoDto){
-        todo_sqlite.insertDB(encodeData, todoDto);
+    public void insertTodo(String uuid, TodoDto todoDto){
+        todo_sqlite.insertDB(uuid, todoDto);
     }
 
-    public void updateTodo(int pk, String encodeData, TodoDto todoDto){
-        todo_sqlite.updateDB(pk, encodeData, todoDto);
+    public void updateTodo(int pk, String uuid, TodoDto todoDto){
+        todo_sqlite.updateDB(pk, uuid, todoDto);
     }
 
-    public void deleteTodo(int pk, String encodeData){
-        todo_sqlite.deleteDB(pk, encodeData);
+    public void deleteTodo(int pk, String uuid){
+        todo_sqlite.deleteDB(pk, uuid);
     }
 }
