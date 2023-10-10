@@ -13,19 +13,19 @@ public class TodoService {
         return todoDao.selectTodo();
     }
 
-    public JSONObject selectOneTodo(String uuid){
-        return todoDao.selectOneTodo(uuid);
+    public JSONObject selectOneTodo(String id){
+        return todoDao.selectOneTodo(id);
     }
 
-    public void insertTodo(String uuid, TodoDto todoDto){
-        todoDao.insertTodo(uuid, todoDto);
+    public void insertTodo(String id, TodoDto todoDto){
+        todoDao.insertTodo(id, todoDto);
     }
 
-    public void updateTodo(int pk, String uuid, TodoDto todoDto){
-        todoDao.updateTodo(pk, uuid, todoDto);
+    public void updateTodo(int pk, String id, TodoDto todoDto){
+        todoDao.updateTodo(pk, id, todoDto);
     }
 
-    public void deleteTodo(int pk, String uuid){
-        todoDao.deleteTodo(pk, uuid);
+    public void deleteTodo(int pk, String id){
+        todoDao.deleteTodo(pk, id);
     }
 }

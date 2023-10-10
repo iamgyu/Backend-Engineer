@@ -12,10 +12,12 @@ import reactor.core.publisher.Mono;
 public class TodoController {
     @Autowired
     private TodoService todoService;
-
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
     @PostMapping("")
-    public void insert(@RequestHeader("Authorization") String uuid, @RequestBody TodoDto todoDto) {
-        todoService.insertTodo(uuid, todoDto);
+    public void insert(@RequestHeader("Authorization") String token, @RequestBody TodoDto todoDto) {
+        String id = jwtTokenProvider.getUserIdFromJWT(token);
+        todoService.insertTodo(id, todoDto);
     }
 
     @GetMapping("/all")
@@ -24,17 +26,20 @@ public class TodoController {
     }
 
     @GetMapping("")
-    public JSONObject selectOne(@RequestHeader("Authorization") String uuid) {
-        return todoService.selectOneTodo(uuid);
+    public JSONObject selectOne(@RequestHeader("Authorization") String token) {
+        String id = jwtTokenProvider.getUserIdFromJWT(token);
+        return todoService.selectOneTodo(id);
     }
 
     @PatchMapping("/{pk}")
-    public void update(@PathVariable int pk, @RequestHeader("Authorization") String uuid, @RequestBody TodoDto todoDto) {
-        todoService.updateTodo(pk, uuid, todoDto);
+    public void update(@PathVariable int pk, @RequestHeader("Authorization") String token, @RequestBody TodoDto todoDto) {
+        String id = jwtTokenProvider.getUserIdFromJWT(token);
+        todoService.updateTodo(pk, id, todoDto);
     }
 
     @DeleteMapping("/{pk}")
-    public void delete(@PathVariable int pk, @RequestHeader("Authorization") String uuid) {
-        todoService.deleteTodo(pk, uuid);
+    public void delete(@PathVariable int pk, @RequestHeader("Authorization") String token) {
+        String id = jwtTokenProvider.getUserIdFromJWT(token);
+        todoService.deleteTodo(pk, id);
     }
 }
